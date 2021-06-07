@@ -75,8 +75,12 @@ public class UserServiceImpl implements UserService {
         foundUserEntity.setName(fullDto.getName());
         foundUserEntity.setSex(fullDto.getSex());
         foundUserEntity.setSurname(fullDto.getSurname());
-        propertyService.update(propertyMapper.mapToFullDto(fullDto.getProperty()));
-        foundUserEntity.setProperty(fullDto.getProperty());
+
+        String id = fullDto.getProperty().getId();
+        if (id !=null && !id.trim().isEmpty()){
+            propertyService.update(propertyMapper.mapToFullDto(fullDto.getProperty()));
+            foundUserEntity.setProperty(fullDto.getProperty());
+        }
 
         UserEntity updatedPropertyEntity = userRepository.save(foundUserEntity);
 
